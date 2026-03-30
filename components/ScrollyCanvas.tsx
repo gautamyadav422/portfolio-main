@@ -1,7 +1,7 @@
 "use client";
 
+import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { useScroll, useMotionValueEvent } from "framer-motion";
 import Overlay from "./Overlay";
 
 export default function ScrollyCanvas({ frameCount = 75 }: { frameCount?: number }) {
@@ -24,7 +24,7 @@ export default function ScrollyCanvas({ frameCount = 75 }: { frameCount?: number
                 const promise = new Promise<void>((resolve) => {
                     const img = new Image();
                     const frameId = i.toString().padStart(4, "0");
-                    const basePath = window.location.pathname.startsWith('/portfolio-main') ? '/portfolio-main' : '';
+                    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
                     img.src = `${basePath}/sequence/${frameId}.png`;
                     img.onload = () => {
                         loadedImages[i] = img;
@@ -110,11 +110,6 @@ export default function ScrollyCanvas({ frameCount = 75 }: { frameCount?: number
     return (
         <div ref={containerRef} className="h-[500vh] relative">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
-                {!isLoaded && (
-                    <div className="absolute inset-0 flex items-center justify-center text-white z-50">
-                        Loading...
-                    </div>
-                )}
                 <canvas
                     ref={canvasRef}
                     className="block w-full h-full object-cover"
