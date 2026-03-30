@@ -17,27 +17,34 @@ export default function ScrollyCanvas({ frameCount = 75 }: { frameCount?: number
 
     useEffect(() => {
         const loadImages = async () => {
-            const loadedImages: HTMLImageElement[] = [];
-            const promises: Promise<void>[] = [];
+            const loadedImages: HTMLImageElement[] = new Array(frameCount);
 
-            for (let i = 0; i < frameCount; i++) {
-                const promise = new Promise<void>((resolve) => {
+            // 1. Instantly load the very first frame to prevent an empty background!
+            const loadSingleFrame = (index: number): Promise<void> => {
+                return new Promise((resolve) => {
                     const img = new Image();
-                    const frameId = i.toString().padStart(4, "0");
+                    const frameId = index.toString().padStart(4, "0");
                     img.src = `/portfolio-main/sequence/${frameId}.png`;
                     img.onload = () => {
-                        loadedImages[i] = img;
+                        loadedImages[index] = img;
                         resolve();
                     };
-                    // Handle error gracefully
                     img.onerror = () => resolve();
                 });
-                promises.push(promise);
-            }
+            };
 
+            await loadSingleFrame(0);
+            setImages([...loadedImages]);
+            setIsLoaded(true); // Reveal the first frame to the user instantly
+
+            // 2. Silently load the remaining 74 frames in the background so the page doesn't freeze
+            const promises: Promise<void>[] = [];
+            for (let i = 1; i < frameCount; i++) {
+                promises.push(loadSingleFrame(i));
+            }
+            
             await Promise.all(promises);
-            setImages(loadedImages);
-            setIsLoaded(true);
+            setImages([...loadedImages]); // Fully equip the scroll sequence
         };
 
         loadImages();
