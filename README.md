@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gautam Yadav - Senior Flutter Developer Portfolio
 
-## Getting Started
+A premium, interactive personal portfolio website showcasing 8+ years of experience in cross-platform mobile development, built with Next.js, React, and Framer Motion.
 
-First, run the development server:
+## 🚀 Features
+- **Scrollytelling Hero Area:** High-performance canvas sequence animation on scroll.
+- **Interactive Timeline:** Elegant career experience timeline with interactive elements.
+- **Project Showcase:** Beautiful cards detailing project descriptions and tech stacks.
+- **Fully Responsive Target:** Tailored for both desktop and mobile viewing with seamless Tailwind styling.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 💻 Local Development
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-## Learn More
+## 🌐 Hosting on GitHub Pages
 
-To learn more about Next.js, take a look at the following resources:
+This project is fully configured to be deployed automatically to GitHub Pages using GitHub Actions! 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Steps to Deploy:
+1. **Rename your Repository (Highly Recommended):**
+   For the best experience and to prevent image loading issues, rename your repository on GitHub to your username: `gautamyadav422.github.io`
+   
+2. **Push your Code:**
+   Make sure all your latest changes (including the `.github/workflows/deploy.yml` file) are pushed to the `main` branch.
+   ```bash
+   git push origin main
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Enable GitHub Actions:**
+   - Go to your repository on GitHub.
+   - Click the **Settings** tab.
+   - Click on **Pages** in the left sidebar.
+   - Under *Build and deployment*, change the Source to **GitHub Actions**.
 
-## Deploy on Vercel
+GitHub will automatically run the build pipeline and your portfolio will be beautifully hosted and live at `https://gautamyadav422.github.io`!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+© 2026 Gautam Yadav. All Rights Reserved.

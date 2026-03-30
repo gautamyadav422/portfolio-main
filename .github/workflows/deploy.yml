@@ -1,18 +1,13 @@
-name: Deploy Next.js to GitHub Pages
+name: Deploy Next.js site to Pages
 
 on:
   push:
     branches: ["main"]
-  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   build:
@@ -20,20 +15,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: npm
+          cache: 'npm'
+
       - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-        with:
-          static_site_generator: next
+        uses: actions/configure-pages@v4
+
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+
       - name: Build with Next.js
-        run: npx --no-install next build
+        run: npm run build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
