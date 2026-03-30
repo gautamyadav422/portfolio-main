@@ -7,7 +7,7 @@ import Overlay from "./Overlay";
 export default function ScrollyCanvas({ frameCount = 75 }: { frameCount?: number }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    const [images, setImages] = useState<HTMLImageElement[]>([]);
+    const imagesRef = useRef<(HTMLImageElement | null)[]>(new Array(frameCount).fill(null));
     const [isLoaded, setIsLoaded] = useState(false);
 
     const { scrollYProgress } = useScroll({
@@ -17,9 +17,6 @@ export default function ScrollyCanvas({ frameCount = 75 }: { frameCount?: number
 
     useEffect(() => {
         const loadImages = async () => {
-            const loadedImages: HTMLImageElement[] = new Array(frameCount);
-
-            // 1. Instantly load the very first frame to prevent an empty background!
             const loadSingleFrame = (index: number): Promise<void> => {
                 return new Promise((resolve) => {
                     const img = new Image();
@@ -28,25 +25,21 @@ export default function ScrollyCanvas({ frameCount = 75 }: { frameCount?: number
                     
                     img.src = `${basePath}/sequence/${frameId}.png`;
                     img.onload = () => {
-                        loadedImages[index] = img;
+                        imagesRef.current[index] = img;
                         resolve();
                     };
                     img.onerror = () => resolve();
                 });
             };
 
+            // 1. Instantly load the very first frame to prevent an empty background!
             await loadSingleFrame(0);
-            setImages([...loadedImages]);
             setIsLoaded(true); // Reveal the first frame to the user instantly
 
-            // 2. Silently load the remaining 74 frames in the background so the page doesn't freeze
-            const promises: Promise<void>[] = [];
+            // 2. Silently load the remaining 74 frames progressively
             for (let i = 1; i < frameCount; i++) {
-                promises.push(loadSingleFrame(i));
+                loadSingleFrame(i); // We intentionally do NOT await this loop, letting them load independently!
             }
-            
-            await Promise.all(promises);
-            setImages([...loadedImages]); // Fully equip the scroll sequence
         };
 
         loadImages();
@@ -54,12 +47,23 @@ export default function ScrollyCanvas({ frameCount = 75 }: { frameCount?: number
 
     const renderFrame = (index: number) => {
         const canvas = canvasRef.current;
-        if (!canvas || !images[index]) return;
+        if (!canvas) return;
+
+        // Try to get the exact frame, or fall back dynamically to the nearest fully loaded previous frame!
+        let img = imagesRef.current[index];
+        if (!img) {
+            for (let i = index - 1; i >= 0; i--) {
+                if (imagesRef.current[i]) {
+                    img = imagesRef.current[i];
+                    break;
+                }
+            }
+        }
+        
+        if (!img) return;
 
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
-
-        const img = images[index];
 
         // Responsive Object-Fit Cover Logic
         const canvasRatio = canvas.width / canvas.height;
@@ -87,7 +91,7 @@ export default function ScrollyCanvas({ frameCount = 75 }: { frameCount?: number
     };
 
     useMotionValueEvent(scrollYProgress, "change", (latest) => {
-        if (!isLoaded || images.length === 0) return;
+        if (!isLoaded) return;
         const frameIndex = Math.min(
             frameCount - 1,
             Math.floor(latest * frameCount)
