@@ -4,6 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Optional: If your repo is NOT a custom domain (e.g., username.github.io/repo-name/)
+  // basePath: '/repo-name', 
 };
 
 export default nextConfig;
