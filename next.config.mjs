@@ -4,8 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Optional: If your repo is NOT a custom domain (e.g., username.github.io/repo-name/)
-  // basePath: '/repo-name', 
+  // We automatically set basePath for GitHub Pages so assets load properly
+  basePath: process.env.GITHUB_ACTIONS ? '/portfolio-main' : '',
 };
 
 export default nextConfig;
