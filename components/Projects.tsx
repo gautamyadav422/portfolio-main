@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const basePath = '/portfolio-main';
 
 const projects = [
     {
