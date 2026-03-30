@@ -1,6 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
+
+import nsdlImg from "@/public/projects/nsdl.png";
+import gmoneyImg from "@/public/projects/gmoney.png";
+import snapworksImg from "@/public/projects/snapworks.jpeg";
+import hereImg from "@/public/projects/here.png";
 
 const projects = [
     {
@@ -8,7 +14,7 @@ const projects = [
         category: "Banking App",
         description: "Architected a secure, high-performance Flutter banking ecosystem featuring a modular design system and scalable state management to deliver seamless financial services for millions of users.",
         tech: "Flutter, Dart, RESTful APIs, Firebase",
-        image: "/projects/nsdl.png",
+        image: nsdlImg,
         url: "https://play.google.com/store/apps/details?id=com.nsdlpb.jiffy",
     },
     {
@@ -16,7 +22,7 @@ const projects = [
         category: "FinTech App",
         description: "Architected a dual-app ecosystem for healthcare lending using GetX, streamlining specialized loan workflows for both doctors and customers through a high-performance, single-codebase solution.",
         tech: "Flutter, Dart, RESTful APIs, Firebase",
-        image: "/projects/gmoney.png",
+        image: gmoneyImg,
         url: "https://www.gmoney.in/",
     },
     {
@@ -24,7 +30,7 @@ const projects = [
         category: "Banking App",
         description: "Engineered a comprehensive Flutter-based field service management platform, delivering real-time job tracking, automated scheduling, and seamless client communication through a unified, high-performance mobile solution.",
         tech: "Flutter, Dart, RESTful APIs, Firebase",
-        image: "/projects/snapworks.jpeg",
+        image: snapworksImg,
         url: "https://play.google.com/store/apps/details?id=com.hsl.investright&hl=en_IN",
     },
     {
@@ -32,7 +38,7 @@ const projects = [
         category: "Mapping & Navigation",
         description: "Development of a high-performance Flutter-based mapping and navigation application, delivering real-time location tracking, turn-by-turn directions, and seamless user experiences through a unified, high-performance mobile solution.",
         tech: "Flutter, Dart, RESTful APIs, Firebase",
-        image: "/projects/here.png",
+        image: hereImg,
         url: "https://play.google.com/store/apps/details?id=com.here.app.maps&hl=en_IN",
     },
 ];
@@ -56,10 +62,11 @@ export default function Projects() {
                             <>
                                 {/* Image Background */}
                                 <div className="absolute inset-0 z-0">
-                                    <img
-                                        src={`/portfolio-main${project.image}`}
+                                    <Image
+                                        src={project.image}
                                         alt={project.title}
-                                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-[#121212]/80 to-transparent opacity-90 transition-opacity group-hover:opacity-75" />
                                 </div>
