@@ -24,7 +24,9 @@ export default function ScrollyCanvas({ frameCount = 75 }: { frameCount?: number
                 return new Promise((resolve) => {
                     const img = new Image();
                     const frameId = index.toString().padStart(4, "0");
-                    img.src = `/portfolio-main/sequence/${frameId}.png`;
+                    const basePath = '/portfolio-main';
+                    
+                    img.src = `${basePath}/sequence/${frameId}.png`;
                     img.onload = () => {
                         loadedImages[index] = img;
                         resolve();
